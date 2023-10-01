@@ -40,6 +40,34 @@
 
     ];
 
+$has_filters = !empty($_GET);
+
+if ($has_filters) {
+    $filters = $_GET;
+
+    if (isset($filters['parking'])) {
+        if($filters['parking'] != 'both') {
+
+            $temp_hotels = [];
+            foreach($hotels as $hotel) {
+                if((bool) $filters['parking'] === $hotel['parking']) {
+                    $temp_hotels[] = $hotel;
+                }
+            }
+            $hotels = $temp_hotels; 
+        }
+    }
+
+    if (isset($filters['vote'])) {
+        $temp_hotel = [];
+        foreach($hotels as $hotel) {
+            if($hotel['vote'] >= (int) $filters['vote']) {
+                $temp_hotels[] = $hotel;
+            }
+        }
+        $hotels = $temp_hotels; 
+    }
+}
 ?>
 
 
@@ -64,6 +92,29 @@
 
 <div class="container mt-5">
     <h1> Hotels  </h1>
+    <div class="hotel-filter">
+    <h4> Filtri </h4>
+    
+    <form method="GET">
+        <div class="parking">
+            <label for="parking" class="parking">Cerchi parcheggio? </label>
+            <select name = "parking" id= "parking" class="form-select" required>
+                <option value=""> Scegli </option>
+                <option value="1" <?php echo "1" == $filters['parking ']? 'selected' : '' ?>> Sì </option>
+                <option value="0" <?php echo "0" == $filters['parking ']? 'selected' : '' ?>> No </option>
+                <option value="both" <?php echo "both" == $filters['parking ']? 'selected' : '' ?>> Indifferente </option>
+            </select>
+        </div>
+        <div class= "vote">
+            <label for="vote" class="vote"> Filtra hotel per voto </label>
+            <input type="number" name="vote" min="1" max="5" id="vote"
+            value = <?php echo $filters['vote'] ?>>
+        </div>
+        <button class= "btn btn-success mt-3"> Filtra servizi </button>
+    </form>
+    
+</div>
+
     <table class="table table-striped">
   <thead>
     <tr>
