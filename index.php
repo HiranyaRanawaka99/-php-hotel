@@ -100,15 +100,15 @@ if ($has_filters) {
             <label for="parking" class="parking">Cerchi parcheggio? </label>
             <select name = "parking" id= "parking" class="form-select" required>
                 <option value=""> Scegli </option>
-                <option value="1" <?php echo "1" == $filters['parking ']? 'selected' : '' ?>> Sì </option>
-                <option value="0" <?php echo "0" == $filters['parking ']? 'selected' : '' ?>> No </option>
-                <option value="both" <?php echo "both" == $filters['parking ']? 'selected' : '' ?>> Indifferente </option>
+                <option value="1" <?php echo "1" == ($filters['parking'] ?? '') ? 'selected' : '' ?>> Sì </option>
+                <option value="0" <?php echo "0" == ($filters['parking']?? '') ? 'selected' : '' ?>> No </option>
+                <option value="both" <?php echo "both" == ($filters['parking']?? '') ? 'selected' : ''?>> Indifferente </option>
             </select>
         </div>
         <div class= "vote">
             <label for="vote" class="vote"> Filtra hotel per voto </label>
             <input type="number" name="vote" min="1" max="5" id="vote"
-            value = <?php echo $filters['vote'] ?>>
+            value = <?php echo $filters['vote'] ?? '' ?>>
         </div>
         <button class= "btn btn-success mt-3"> Filtra servizi </button>
     </form>
